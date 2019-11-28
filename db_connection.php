@@ -12,7 +12,7 @@
 
     try
     {
-    $pdo = new PDO("mysql:host=$servername;dbname=$db", $username, $password, $options);
+        $pdo = new PDO("mysql:host=$servername;dbname=$db", $username, $password, $options);
     }
     catch(PDOException $e)
     {
