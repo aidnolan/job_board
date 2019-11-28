@@ -1,22 +1,27 @@
 <?php
 
 function job_data_search() {
+    include("db_connection.php");
 
     $output = input_cleaner($_GET);
 
-    $sql = "SELECT * FROM job_board ";
-    // foreach ($clean_search_input as $heading => $input) {
-    //     if ($heading === "job_title") {
-    //         $sql .= "WHERE ";
-    //     } else {
-    //         $sql .= "AND ";
-    //     }
-    //     $sql .= $heading .  " LIKE '%" . $input . "%' " ;
-    // }
-    // var_dump($sql);
-    // $query = mysql_query($sql);
-    // $job_list_array = mysql_fetch_array($query);
-    return $output;
+    $sql = 'SELECT job_title,job_description,job_tags,job_location,job_type FROM job_listings ';
+
+    foreach ($output as $heading => $input) {
+        if ($input) {
+            if ($heading === "job_title") {
+                $sql .= "WHERE ";
+            } else {
+                $sql .= "AND ";
+            }
+            $sql .= $heading .  " LIKE '%" . $input . "%' " ;
+        }
+    }
+    $query = $pdo->query($sql);
+
+    $job_list_array = $query->fetch();
+
+    return $job_list_array;
 }
 
 function input_cleaner($input)
